@@ -12,6 +12,21 @@ Whether you're declining a meeting, avoiding plans, rejecting an invitation, or 
 
 ---
 
+## Live API
+
+The API is publicly deployed and ready to use.
+
+**Base URL:**  
+https://no-as-a-service.onrender.com
+
+**Rejection endpoint:**  
+https://no-as-a-service.onrender.com/no
+
+**Interactive API documentation:**  
+https://no-as-a-service.onrender.com/docs
+
+---
+
 ## Features
 
 - **Random Rejections** — Returns a different rejection reason on each request.
@@ -21,6 +36,7 @@ Whether you're declining a meeting, avoiding plans, rejecting an invitation, or 
 - **Automatic API Documentation** — Interactive Swagger UI and OpenAPI specification via FastAPI.
 - **Layered Architecture** — Separates routing, business logic, data models, and configuration.
 - **Test Suite** — Endpoint and validation tests using Pytest and FastAPI's `TestClient`.
+- **Public Deployment** — Hosted and accessible through Render.
 
 ---
 
@@ -35,6 +51,7 @@ Whether you're declining a meeting, avoiding plans, rejecting an invitation, or 
 | SlowAPI      | Rate limiting              |
 | Pytest       | Testing                    |
 | HTTPX        | HTTP client and testing    |
+| Render       | Cloud deployment           |
 
 ---
 
@@ -125,7 +142,7 @@ pip install -r requirements.txt
 python -m uvicorn app.main:app --reload
 ```
 
-The API will be available at:
+The API will be available locally at:
 
 ```text
 http://127.0.0.1:8000
@@ -135,11 +152,35 @@ http://127.0.0.1:8000
 
 ## API
 
+### `GET /`
+
+Returns a simple welcome message.
+
+**Production**
+
+```text
+https://no-as-a-service.onrender.com/
+```
+
+**Local**
+
+```text
+http://127.0.0.1:8000/
+```
+
+---
+
 ### `GET /no`
 
 Returns a random rejection reason.
 
-**Request**
+**Production**
+
+```bash
+curl https://no-as-a-service.onrender.com/no
+```
+
+**Local**
 
 ```bash
 curl http://127.0.0.1:8000/no
@@ -161,13 +202,19 @@ Each request can return a different rejection.
 
 FastAPI automatically generates interactive API documentation.
 
-With the server running, open:
+Open the Swagger interface at:
+
+```text
+https://no-as-a-service.onrender.com/docs
+```
+
+The documentation allows you to explore and test the API directly from your browser.
+
+For local development:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
-
-The Swagger interface allows you to explore and test the API directly from your browser.
 
 ---
 
@@ -208,5 +255,6 @@ GET /no
 
 ## Author
 
-**Azaan Ahmed**  
+**Azaan Ahmed**
+
 [GitHub](https://github.com/NomadBeetle)
