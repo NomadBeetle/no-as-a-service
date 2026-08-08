@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Banner.jpeg" alt="No-as-a-Service Banner" width="100%">
+</p>
+
 # No-as-a-Service (NaaS)
 
 > Because sometimes "no" needs an API.
