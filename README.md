@@ -6,7 +6,7 @@
 
 > Because sometimes "no" needs an API.
 
-A lightweight FastAPI microservice that generates random, creative, and occasionally questionable rejection reasons on demand.
+A lightweight FastAPI microservice that generates random, creative, and occasionally questionable rejection reasons on demand — now powered by **Gemini AI** with a JSON fallback.
 
 Whether you're declining a meeting, avoiding plans, rejecting an invitation, or just need an excuse with questionable logic — NaaS has you covered.
 
@@ -22,36 +22,36 @@ https://no-as-a-service.onrender.com
 **Rejection endpoint:**  
 https://no-as-a-service.onrender.com/no
 
-**Interactive API documentation:**  
-https://no-as-a-service.onrender.com/docs
-
 ---
 
 ## Features
 
-- **Random Rejections** — Returns a different rejection reason on each request.
+- **AI-Powered Rejections** — Uses Gemini AI to generate unique, sarcastic rejection reasons.
+- **Reliable Fallback** — Falls back to a curated JSON dataset if Gemini is unavailable.
+- **Creative Frontend** — A dark, sarcastic single-page app to generate rejections visually.
 - **Clean JSON API** — Simple and predictable response schema.
 - **Rate Limiting** — IP-based rate limiting using SlowAPI (120 requests/minute).
 - **CORS Support** — Configured for integration with web applications and browser extensions.
-- **Automatic API Documentation** — Interactive Swagger UI and OpenAPI specification via FastAPI.
 - **Layered Architecture** — Separates routing, business logic, data models, and configuration.
 - **Test Suite** — Endpoint and validation tests using Pytest and FastAPI's `TestClient`.
-- **Public Deployment** — Hosted and accessible through Render.
+- **Public Deployment** — Backend on Render, frontend on Vercel.
 
 ---
 
 ## Tech Stack
 
-| Technology   | Purpose                    |
-| ------------ | -------------------------- |
-| Python 3.11+ | Programming language       |
-| FastAPI      | Web framework              |
-| Pydantic v2  | Data validation and models |
-| Uvicorn      | ASGI server                |
-| SlowAPI      | Rate limiting              |
-| Pytest       | Testing                    |
-| HTTPX        | HTTP client and testing    |
-| Render       | Cloud deployment           |
+| Technology       | Purpose                              |
+| ---------------- | ------------------------------------ |
+| Python 3.11+     | Programming language                 |
+| FastAPI          | Web framework                        |
+| Gemini AI        | AI-powered rejection generation      |
+| Pydantic v2      | Data validation and models           |
+| Uvicorn          | ASGI server                          |
+| SlowAPI          | Rate limiting                        |
+| Pytest           | Testing                             |
+| HTML/CSS/JS      | Frontend                             |
+| Render           | Backend deployment                   |
+| Vercel           | Frontend deployment                  |
 
 ---
 
@@ -60,32 +60,36 @@ https://no-as-a-service.onrender.com/docs
 ```text
 no-as-a-service/
 │
-├── app/
-│   ├── models/
-│   │   └── reason.py
-│   │
-│   ├── routers/
-│   │   └── rejection.py
-│   │
-│   ├── services/
-│   │   └── rejection_service.py
-│   │
-│   ├── config.py
-│   └── main.py
+├── backend/
+│   ├── app/
+│   │   ├── models/
+│   │   │   └── reason.py
+│   │   ├── routers/
+│   │   │   └── rejection.py
+│   │   ├── services/
+│   │   │   └── rejection_service.py
+│   │   ├── config.py
+│   │   └── main.py
+│   ├── data/
+│   │   └── reasons.json
+│   ├── tests/
+│   │   └── test_rejection.py
+│   ├── requirements.txt
+│   └── .env.example
 │
-├── data/
-│   └── reasons.json
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   ├── script.js
+│   └── Banner.jpeg
 │
-├── tests/
-│   └── test_rejection.py
-│
+├── .env.example
 ├── .gitignore
 ├── Banner.jpeg
-├── README.md
-└── requirements.txt
+└── README.md
 ```
 
-The application follows a simple separation of concerns:
+### Architecture
 
 ```text
 Request
@@ -94,10 +98,12 @@ Request
 Router
    │
    ▼
-Service
-   │
-   ▼
-Data / Model
+Service ──► Gemini AI (primary)
+   │              │
+   │         (on failure)
+   │              │
+   │              ▼
+   └──────► JSON Fallback
    │
    ▼
 JSON Response
@@ -114,7 +120,13 @@ git clone https://github.com/NomadBeetle/no-as-a-service.git
 cd no-as-a-service
 ```
 
-### Create a virtual environment
+### Backend Setup
+
+```bash
+cd backend
+```
+
+**Create a virtual environment:**
 
 **Windows**
 
@@ -130,13 +142,28 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### Install dependencies
+**Install dependencies:**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Start the server
+**Configure environment:**
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and add your Gemini API key:
+
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+> 💡 **Get a free Gemini API key** at [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)  
+> If you skip this step, the app still works — it falls back to the JSON file.
+
+**Start the server:**
 
 ```bash
 python -m uvicorn app.main:app --reload
@@ -147,6 +174,20 @@ The API will be available locally at:
 ```text
 http://127.0.0.1:8000
 ```
+
+### Frontend Setup
+
+The frontend is a static site — just open it in your browser:
+
+```bash
+cd frontend
+# Open index.html in your browser, or use a local server:
+python -m http.server 3000
+```
+
+Visit `http://localhost:3000` in your browser.
+
+> **Note:** By default, the frontend points to the deployed API at `https://no-as-a-service.onrender.com`. To use your local backend, update `API_BASE_URL` in `frontend/script.js`.
 
 ---
 
@@ -172,7 +213,7 @@ http://127.0.0.1:8000/
 
 ### `GET /no`
 
-Returns a random rejection reason.
+Returns a random rejection reason (Gemini AI first, JSON fallback if needed).
 
 **Production**
 
@@ -198,33 +239,51 @@ Each request can return a different rejection.
 
 ---
 
-### `GET /docs`
+## Running Tests
 
-FastAPI automatically generates interactive API documentation.
+Run the complete test suite from the `backend` directory:
 
-Open the Swagger interface at:
-
-```text
-https://no-as-a-service.onrender.com/docs
-```
-
-The documentation allows you to explore and test the API directly from your browser.
-
-For local development:
-
-```text
-http://127.0.0.1:8000/docs
+```bash
+cd backend
+python -m pytest
 ```
 
 ---
 
-## Running Tests
+## Deployment Guide
 
-Run the complete test suite with:
+### Backend on Render
 
-```bash
-python -m pytest
-```
+1. **Connect your GitHub repo** to [Render](https://render.com).
+2. **Create a new Web Service** with these settings:
+
+   | Setting          | Value                                      |
+   | ---------------- | ------------------------------------------ |
+   | **Root Directory**   | `backend`                                  |
+   | **Build Command**    | `pip install -r requirements.txt`          |
+   | **Start Command**    | `uvicorn app.main:app --host 0.0.0.0 --port $PORT` |
+   | **Environment**      | `Python 3`                                 |
+
+3. **Add environment variable** in the Render dashboard:
+   - `GEMINI_API_KEY` = your Gemini API key
+
+4. Deploy. Render will handle the rest.
+
+### Frontend on Vercel
+
+1. **Connect your GitHub repo** to [Vercel](https://vercel.com).
+2. **Create a new project** with these settings:
+
+   | Setting              | Value          |
+   | -------------------- | -------------- |
+   | **Root Directory**       | `frontend`     |
+   | **Framework Preset**     | `Other`        |
+   | **Build Command**        | *(leave empty)* |
+   | **Output Directory**     | `.`            |
+
+3. Deploy. Vercel will serve the static files.
+
+> **Tip:** If you change the backend URL, update `API_BASE_URL` in `frontend/script.js` before deploying.
 
 ---
 

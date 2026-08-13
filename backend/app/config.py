@@ -1,12 +1,12 @@
-import os
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 
 class Settings(BaseSettings):
+    model_config = ConfigDict(env_file=".env")
+
     APP_NAME: str = "No-as-a-Service (NaaS)"
     APP_VERSION: str = "1.0.0"
     RATE_LIMIT: str = "120/minute"
-    
-    class Config:
-        env_file = ".env"
+    GEMINI_API_KEY: str = ""
 
 settings = Settings()

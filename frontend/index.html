@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No-as-a-Service | Professionally Delivered Rejection</title>
+    <meta name="description" content="Need an excuse? NaaS delivers creative, sarcastic, and professionally worded rejection reasons on demand. Say no like you mean it.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23e94560'/><text x='50' y='58' text-anchor='middle' font-family='Arial Black,sans-serif' font-size='38' font-weight='900' fill='white'>NO</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated background grid -->
+    <div class="bg-grid" aria-hidden="true"></div>
+    
+    <!-- Floating particles -->
+    <div class="particles" id="particles" aria-hidden="true"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <header class="hero" id="hero">
+            <div class="hero-banner">
+                <img src="Banner.jpeg" alt="No-as-a-Service — Bugs Bunny says NO" class="banner-img" id="banner-logo">
+            </div>
+            <p class="hero-tagline" id="hero-tagline">
+                Because sometimes <span class="highlight">"no"</span> needs an API.
+            </p>
+            <p class="hero-sub">Professionally delivered rejection since 2026. 🐰</p>
+        </header>
+
+        <!-- Rejection Generator -->
+        <section class="generator" id="generator">
+            <div class="generator-card">
+                <h1 class="generator-title" id="generator-title">Need an excuse?</h1>
+                <p class="generator-subtitle">We got you. One click, infinite rejection.</p>
+                
+                <button class="no-button" id="no-button" type="button">
+                    <span class="no-button-text">Say NO</span>
+                    <span class="no-button-icon">🚫</span>
+                    <div class="no-button-ripple"></div>
+                </button>
+
+                <div class="result-area" id="result-area">
+                    <div class="result-card hidden" id="result-card">
+                        <div class="result-quote-mark">"</div>
+                        <p class="result-text" id="result-text"></p>
+                        <div class="result-actions">
+                            <button class="action-btn copy-btn" id="copy-btn" type="button" title="Copy to clipboard">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                <span id="copy-text">Copy</span>
+                            </button>
+                            <button class="action-btn share-btn" id="share-btn" type="button" title="Share this rejection">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                        <div class="result-source" id="result-source"></div>
+                    </div>
+                </div>
+
+                <!-- Loading state -->
+                <div class="loader hidden" id="loader">
+                    <div class="loader-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <p class="loader-text">Consulting the rejection oracle...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section" id="history-section">
+            <div class="history-header">
+                <h2 class="history-title" id="history-title">
+                    <span class="history-icon">📜</span> Hall of Rejection
+                </h2>
+                <button class="clear-btn" id="clear-history-btn" type="button">Clear All</button>
+            </div>
+            <div class="history-list" id="history-list">
+                <p class="history-empty" id="history-empty">No rejections yet. Hit that button! 👆</p>
+            </div>
+        </section>
+
+        <!-- Stats bar -->
+        <section class="stats-bar" id="stats-bar">
+            <div class="stat">
+                <span class="stat-number" id="stat-count">0</span>
+                <span class="stat-label">Rejections Generated</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="stat-copies">0</span>
+                <span class="stat-label">Copied to Clipboard</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" id="stat-streak">0</span>
+                <span class="stat-label">Current Streak</span>
+            </div>
+        </section>
+
+        <!-- API Info -->
+        <section class="api-section" id="api-section">
+            <h2 class="api-title">For the Devs 🛠️</h2>
+            <div class="api-card">
+                <div class="api-method">
+                    <span class="method-badge">GET</span>
+                    <code class="api-endpoint" id="api-endpoint">/no</code>
+                </div>
+                <p class="api-desc">Returns a random rejection reason. Perfect for bots, apps, and awkward situations.</p>
+                <div class="api-example">
+                    <div class="code-header">
+                        <span>Response</span>
+                        <button class="action-btn copy-code-btn" id="copy-api-btn" type="button">Copy</button>
+                    </div>
+                    <pre class="code-block"><code>{
+  "reason": "I'd love to, but my imaginary lawyer advised against it."
+}</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                Built with 💀 and a healthy disregard for RSVP culture.
+            </p>
+            <p class="footer-credit">
+                <a href="https://github.com/NomadBeetle/no-as-a-service" target="_blank" rel="noopener noreferrer" id="github-link">GitHub</a>
+                &nbsp;·&nbsp; NaaS v2.0
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 router = APIRouter(prefix="/no", tags=["Rejections"])
 
-# Resolve path to data/reasons.json at root level
+# Resolve path to data/reasons.json relative to backend root
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "reasons.json"
 service = RejectionService(DATA_FILE)
 
