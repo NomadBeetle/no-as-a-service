@@ -264,13 +264,20 @@ function renderHistory() {
     history.forEach((reason, index) => {
         const item = document.createElement("div");
         item.classList.add("history-item");
-        item.innerHTML = `
-            <span class="history-number">${history.length - index}</span>
-            <p class="history-text">${escapeHtml(reason)}</p>
-        `;
+
+        const num = document.createElement("span");
+        num.classList.add("history-number");
+        num.textContent = `${history.length - index}`;
+
+        const text = document.createElement("p");
+        text.classList.add("history-text");
+        text.textContent = reason;
+
+        item.appendChild(num);
+        item.appendChild(text);
+
         item.addEventListener("click", () => {
             copyToClipboard(reason);
-            const num = item.querySelector(".history-number");
             num.textContent = "✓";
             num.style.color = "var(--success)";
             setTimeout(() => {
