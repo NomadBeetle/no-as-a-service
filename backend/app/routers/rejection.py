@@ -21,7 +21,7 @@ service = RejectionService(DATA_FILE)
     response_model=RejectionResponse,
     responses={404: {"model": ErrorResponse}}
 )
-@limiter.limit("120/minute")
+@limiter.limit("60/minute")
 def get_rejection(request: Request):
     reason_str = service.get_random_reason()
     if not reason_str:

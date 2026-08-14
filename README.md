@@ -30,7 +30,7 @@ https://no-as-a-service.onrender.com/no
 - **Reliable Fallback** — Falls back to a curated JSON dataset if Gemini is unavailable.
 - **Creative Frontend** — A dark, sarcastic single-page app to generate rejections visually.
 - **Clean JSON API** — Simple and predictable response schema.
-- **Rate Limiting** — IP-based rate limiting using SlowAPI (120 requests/minute).
+- **Rate Limiting** — IP-based rate limiting using SlowAPI (60 requests/minute).
 - **CORS Support** — Configured for integration with web applications and browser extensions.
 - **Layered Architecture** — Separates routing, business logic, data models, and configuration.
 - **Test Suite** — Endpoint and validation tests using Pytest and FastAPI's `TestClient`.

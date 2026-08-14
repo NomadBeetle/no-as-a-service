@@ -6,7 +6,7 @@ class Settings(BaseSettings):
 
     APP_NAME: str = "No-as-a-Service (NaaS)"
     APP_VERSION: str = "1.0.0"
-    RATE_LIMIT: str = "120/minute"
+    RATE_LIMIT: str = "60/minute"
     GEMINI_API_KEY: str = ""
 
 settings = Settings()
