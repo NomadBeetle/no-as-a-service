@@ -12,7 +12,7 @@ limiter = Limiter(key_func=get_remote_address)
 
 router = APIRouter(prefix="/no", tags=["Rejections"])
 
-# Resolve path to data/reasons.json at root level
+# Resolve path to data/reasons.json relative to backend root
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "reasons.json"
 service = RejectionService(DATA_FILE)
 
@@ -21,7 +21,7 @@ service = RejectionService(DATA_FILE)
     response_model=RejectionResponse,
     responses={404: {"model": ErrorResponse}}
 )
-@limiter.limit("120/minute")
+@limiter.limit("60/minute")
 def get_rejection(request: Request):
     reason_str = service.get_random_reason()
     if not reason_str:

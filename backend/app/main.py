@@ -30,4 +30,4 @@ app.include_router(rejection.router)
 
 @app.get("/")
 def root():
-    return {"message": "Welcome to No-as-a-Service! Hit /no or visit /docs for API specs."}
+    return {"message": "Welcome to No-as-a-Service! Hit /no to get a rejection reason."}
